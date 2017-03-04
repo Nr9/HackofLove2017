@@ -11,7 +11,7 @@ export default ({config, db}) => {
 
     // perhaps expose some API metadata at the root
     function getParam(req) {
-        let [latitude, longitude] = req.query.location.split(',');
+        let [longitude, latitude] = req.query.location.split(',');
         let radius = req.query.radius;
         let quantity = req.query.quantity;
         return {
