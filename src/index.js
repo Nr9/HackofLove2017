@@ -6,6 +6,7 @@ import bodyParser from 'body-parser';
 import initializeDb from './db';
 import middleware from './middleware';
 import api from './api';
+import polygon from './polygon';
 import nearest from './nearest';
 import config from './config.json';
 
@@ -33,6 +34,7 @@ initializeDb( db => {
 	// api router
 	app.use('/api', api({ config, db }));
 	app.use('/nearest', nearest({ config, db }));
+    app.use('/parkingzone', polygon({ config, db }));
 
 	app.server.listen(process.env.PORT || config.port);
 
