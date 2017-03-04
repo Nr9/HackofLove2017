@@ -8,7 +8,7 @@
     "dev": "nodemon -w src --exec \"babel-node src --presets es2015,stage-0\"",
     "build": "./node_modules/.bin/babel src -s -D -d dist --presets es2015,stage-0",
     "start": "node dist",
-    "prestart": "npm run -s build",
+    "prestart": "npm run build",
     "unit-local": "mocha src/test/** --compilers js:babel-core/register --reporter landing",
     "unit-local-debug": "mocha $NODE_DEBUG_OPTION src/test/** --compilers js:babel-core/register --reporter landing"
   },
