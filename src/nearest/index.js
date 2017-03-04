@@ -17,14 +17,20 @@ export default ({config, db}) => {
         return {
             latitude: parseFloat(latitude),
             longitude: parseFloat(longitude),
-            radius: parseInt(radius),
-            quantity: parseInt(quantity),
+            radius: radius && parseInt(radius),
+            quantity: quantity && parseInt(quantity),
         };
     }
 
     function buildResponse(latitude, longitude, radius, quantity) {
-        let date = parcometres.findTopNearest({latitude, longitude}, radius, quantity);
-        const features = (date||[]).map((item) => item.feature);
+        if (!radius)
+        {
+            let feature = parcometres.findTopNearest({latitude, longitude});
+            return feature && feature.feature;
+        }
+
+        let data = parcometres.findAllNearest({latitude, longitude}, radius, quantity);
+        const features = (data||[]).map((item) => item.feature);
         return {name: 'HackOfLove', type: 'FeatureCollection', features};
     }
 
