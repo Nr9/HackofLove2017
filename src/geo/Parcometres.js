@@ -6,17 +6,25 @@ export class Parcometres {
         this.geoJsonData = geoJsonData;
     }
 
-    findTopNearest(location, radius, maxResults) {
-        const pointsWithDistances = this.getPointsWithDistances(location);
-        const sortedPointsWithDistances = _.sortBy(pointsWithDistances, 'distance');
-        const filteredByRadius = _.filter(sortedPointsWithDistances, (point) => (point.distance <= radius));
-        if (filteredByRadius.length <= maxResults)
-            return filteredByRadius;
-        return filteredByRadius.slice(0, maxResults);
+    findAllNearest(location, radius, maxResults) {
+        if (!radius && !maxResults)
+        {
+            maxResults = 1
+        }
+
+        let pointsWithDistances = this.getPointsWithDistances(location);
+        pointsWithDistances = _.sortBy(pointsWithDistances, 'distance');
+        if (radius > 0) {
+            pointsWithDistances = _.filter(pointsWithDistances, (point) => (point.distance <= radius))
+        }
+        if (!maxResults || pointsWithDistances.length <= maxResults) {
+            return pointsWithDistances
+        }
+        return pointsWithDistances.slice(0, maxResults);
     }
 
-    getPointsWithDistances(location) {
-        return _.map(this.geoJsonData.features, (feature) => {
+    getPointsWithDistances(location, data = this.geoJsonData.features) {
+        return _.map(data, (feature) => {
             return {
                 distance: geolib.getDistance(
                     location,
