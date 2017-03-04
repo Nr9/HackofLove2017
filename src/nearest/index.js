@@ -22,14 +22,9 @@ export default ({config, db}) => {
         };
     }
 
-    function buildResponse(latitude, longitude, radius, quantity) {
-        if (!radius)
-        {
-            let feature = parcometres.findTopNearest({latitude, longitude});
-            return feature && feature.feature;
-        }
-
+    function buildResponse(latitude, longitude, radius, quantity = 1) {
         let data = parcometres.findAllNearest({latitude, longitude}, radius, quantity);
+        console.dir(data);
         const features = (data||[]).map((item) => item.feature);
         return {name: 'HackOfLove', type: 'FeatureCollection', features};
     }
