@@ -20,7 +20,7 @@ export class Parcometres {
             return {
                 distance: geolib.getDistance(
                     location,
-                    {latitude: feature.geometry.coordinates[1], longitude: feature.geometry.coordinates[0]},
+                    {latitude: feature.geometry.coordinates[1], longitude: feature.geometry.coordinates[0]}
                 ),
                 feature: feature
             }
