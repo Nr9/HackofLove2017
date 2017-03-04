@@ -7,6 +7,11 @@ export class Parcometres {
     }
 
     findAllNearest(location, radius, maxResults) {
+        if (!radius && !maxResults)
+        {
+            maxResults = 1
+        }
+
         let pointsWithDistances = this.getPointsWithDistances(location);
         pointsWithDistances = _.sortBy(pointsWithDistances, 'distance');
         if (radius > 0) {
@@ -16,11 +21,6 @@ export class Parcometres {
             return pointsWithDistances
         }
         return pointsWithDistances.slice(0, maxResults);
-    }
-
-    findTopNearest(location) {
-        let nearest = this.findAllNearest(location, undefined, 1);
-        return nearest[0];
     }
 
     getPointsWithDistances(location, data = this.geoJsonData.features) {
